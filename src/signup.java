@@ -1,15 +1,19 @@
-import java.awt.Font;
+package src;
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.*;
+import java.awt.event.*;
 
-public class signup extends JFrame {
-    JTextField textNameField, textFatherField, textDobField, textGenderField,
-            textEmailField, textMaritalField, textAddressField, textStateField, textPincodeField;
-
-    signup() {
+public class signup extends JFrame implements ActionListener{
+    JTextField textNameField, textFatherField, textDobField, 
+            textEmailField, textAddressField, textStateField, textPincodeField;
+    JButton submit;
+    JRadioButton male,female,yes,No;
+    long random;
+    public signup() {
         Random ran = new Random();
-        long random = Math.abs((ran.nextLong() % 9000L) + 1000L);
+        random = Math.abs((ran.nextLong() % 9000L) + 1000L);
 
         setTitle("SIGN UP");
         setLayout(null);
@@ -29,23 +33,23 @@ public class signup extends JFrame {
         // Full Name
         JLabel name = new JLabel("Full Name :");
         name.setFont(new Font("Arial", Font.BOLD, 20));
-        name.setBounds(200, 120, 150, 30);
+        name.setBounds(200, 140, 150, 30);
         add(name);
 
         textNameField = new JTextField();
         textNameField.setFont(new Font("Raleway", Font.PLAIN, 15));
-        textNameField.setBounds(370, 120, 300, 30);
+        textNameField.setBounds(370, 140, 300, 30);
         add(textNameField);
 
         // Father Name
         JLabel fatherName = new JLabel("Father Name :");
         fatherName.setFont(new Font("Arial", Font.BOLD, 20));
-        fatherName.setBounds(200, 180, 150, 30);
+        fatherName.setBounds(200, 190, 150, 30);
         add(fatherName);
 
         textFatherField = new JTextField();
         textFatherField.setFont(new Font("Raleway", Font.PLAIN, 15));
-        textFatherField.setBounds(370, 180, 300, 30);
+        textFatherField.setBounds(370, 190, 300, 30);
         add(textFatherField);
 
         // Date of Birth
@@ -53,6 +57,7 @@ public class signup extends JFrame {
         dob.setFont(new Font("Arial", Font.BOLD, 20));
         dob.setBounds(200, 240, 150, 30);
         add(dob);
+
 
         textDobField = new JTextField();
         textDobField.setFont(new Font("Raleway", Font.PLAIN, 15));
@@ -65,11 +70,20 @@ public class signup extends JFrame {
         gender.setBounds(200, 300, 150, 30);
         add(gender);
 
-        textGenderField = new JTextField();
-        textGenderField.setFont(new Font("Raleway", Font.PLAIN, 15));
-        textGenderField.setBounds(370, 300, 300, 30);
-        add(textGenderField);
+         male=new JRadioButton("Male");
+        male.setBounds(370,300,70,30);
+        male.setFont(new Font("Arial",Font.ITALIC,15));
+        add(male);
 
+         female=new JRadioButton("Female");
+        female.setBounds(450,300,90,30);
+        female.setFont(new Font("Arial",Font.ITALIC,15));
+        add(female);
+
+        ButtonGroup group=new ButtonGroup();
+        group.add(male);
+        group.add(female);
+        
         // Email
         JLabel email = new JLabel("Email :");
         email.setFont(new Font("Arial", Font.BOLD, 20));
@@ -87,10 +101,20 @@ public class signup extends JFrame {
         maritalStatus.setBounds(200, 420, 150, 30);
         add(maritalStatus);
 
-        textMaritalField = new JTextField();
-        textMaritalField.setFont(new Font("Raleway", Font.PLAIN, 15));
-        textMaritalField.setBounds(370, 420, 300, 30);
-        add(textMaritalField);
+        yes=new JRadioButton("YES");
+        yes.setBounds(370,420,70,30);
+        yes.setFont(new Font("Arial",Font.ITALIC,15));
+        add(yes);
+
+         No=new JRadioButton("NO");
+         No.setBounds(450,420,90,30);
+         No.setFont(new Font("Arial",Font.ITALIC,15));
+        add( No);
+
+        ButtonGroup marriagestatus=new ButtonGroup();
+        marriagestatus.add(yes);
+        marriagestatus.add(No);
+
 
         // Address
         JLabel address = new JLabel("Address :");
@@ -125,10 +149,59 @@ public class signup extends JFrame {
         textPincodeField.setBounds(370, 600, 300, 30);
         add(textPincodeField);
 
+        submit=new JButton("NEXT");
+        submit.setBounds(450,660,100,50);
+        submit.setBackground(Color.BLACK);
+        submit.setForeground(Color.WHITE);
+        submit.addActionListener(this);
+        add(submit);
+
         // finally make visible
         setVisible(true);
     }
+       
+    public void actionPerformed(ActionEvent ae){
+        String formno = "" + random;
 
+    // Text field values
+    String name = textNameField.getText();
+    String fname = textFatherField.getText();
+    String dob = textDobField.getText();
+
+    // Gender
+    String gender = null;
+    if (male.isSelected()) {
+        gender = "Male";
+    } else if (female.isSelected()) {
+        gender = "Female";
+    }
+
+    String email = textEmailField.getText();
+
+    // Marital Status
+    String marital = null;
+    if (yes.isSelected()) {
+        marital = "Married";
+    } else if (No.isSelected()) {
+        marital = "Unmarried";
+    }
+
+    String address = textAddressField.getText();
+    String state = textStateField.getText();
+    String pincode = textPincodeField.getText();
+    try{
+        if(name.equals("")){
+            JOptionPane.showMessageDialog(null, "Name is Required");
+        }
+    }
+    catch(Exception e){
+        System.out.println(e);
+    }
+
+
+    }
+    
+    
     public static void main(String[] args) {
         new signup();
     }
