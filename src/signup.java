@@ -193,15 +193,17 @@ public class signup extends JFrame implements ActionListener{
         if(name.equals("")){
             JOptionPane.showMessageDialog(null, "Name is Required");
         }
+        else{
+            jdbcconnection c=new jdbcconnection();
+            String query="insert into signup values ('"+formno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+marital
+            +"','"+address+"','"+state+"','"+pincode+"')";
+            c.s.executeUpdate(query);
+        }
     }
     catch(Exception e){
         System.out.println(e);
     }
-
-
     }
-    
-    
     public static void main(String[] args) {
         new signup();
     }
